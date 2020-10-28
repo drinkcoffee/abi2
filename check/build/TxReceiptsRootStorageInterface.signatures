@@ -1,0 +1,4 @@
+674f78ae: addTxReceiptRoot(uint256,address[],bytes32[],bytes32[],uint8[],bytes32)
+b63735ea: containsTxReceiptRoot(uint256,bytes32)
+01ffc9a7: supportsInterface(bytes4)
+0dc7bade: verify(uint256,bytes32,bytes,uint256[],bytes[])

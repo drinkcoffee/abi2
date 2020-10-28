@@ -1,0 +1,6 @@
+39ce107e: addToListOfLockedContracts(address)
+92b2c335: crossBlockchainCall(uint256,address,bytes)
+8e22d534: crossBlockchainCallReturnsUint256(uint256,address,bytes)
+66b79f5a: getActiveCallCrossBlockchainTransactionId()
+336d5b09: getActiveCallRootBlockchainId()
+b4c3b756: isSingleBlockchainCall()
