@@ -1,2 +1,3 @@
 29c5334f: arrayArray(uint256[][])
+dfc50374: processSignedEvent((uint256,address,bytes32,bytes,address[],bytes32[],bytes32[],uint8[]))
 1f92c32c: structWithArray((uint256,uint256[]))

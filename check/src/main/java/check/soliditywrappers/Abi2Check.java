@@ -17,6 +17,7 @@ import org.web3j.abi.datatypes.Event;
 import org.web3j.abi.datatypes.Type;
 import org.web3j.abi.datatypes.generated.Bytes32;
 import org.web3j.abi.datatypes.generated.Uint256;
+import org.web3j.abi.datatypes.generated.Uint8;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameter;
@@ -41,9 +42,11 @@ import org.web3j.tx.gas.ContractGasProvider;
  */
 @SuppressWarnings("rawtypes")
 public class Abi2Check extends Contract {
-    public static final String BINARY = "608060405234801561001057600080fd5b50610315806100206000396000f3fe608060405234801561001057600080fd5b50600436106100365760003560e01c80631f92c32c1461003b57806329c5334f14610050575b600080fd5b61004e610049366004610217565b610063565b005b61004e61005e3660046101a8565b61010c565b6000805160206102c083398151915281356100816020840184610271565b604051610095939250600090600290610256565b60405180910390a160005b6100ad6020830183610271565b9050811015610108576000805160206102c0833981519152816100d36020850185610271565b848181106100dd57fe5b90506020020135600060036040516100f89493929190610256565b60405180910390a16001016100a0565b5050565b6040516000805160206102c0833981519152906101329083906000908190600190610256565b60405180910390a160005b818110801561014c5750600581105b156101a3576000805160206102c08339815191528184848481811061016d57fe5b905060200281019061017f9190610271565b604051610193939250600090600290610256565b60405180910390a160010161013d565b505050565b600080602083850312156101ba578182fd5b823567ffffffffffffffff808211156101d1578384fd5b818501915085601f8301126101e4578384fd5b8135818111156101f2578485fd5b8660208083028501011115610205578485fd5b60209290920196919550909350505050565b600060208284031215610228578081fd5b813567ffffffffffffffff81111561023e578182fd5b82016040818503121561024f578182fd5b9392505050565b93845260208401929092526040830152606082015260800190565b6000808335601e19843603018112610287578283fd5b83018035915067ffffffffffffffff8211156102a1578283fd5b60209081019250810236038213156102b857600080fd5b925092905056fee5b286ee80c4f7811cec734b866242d61e30147d0b204f87684a2418d138d78fa264697066735822122044a63b5ba4d160b13bc082626415f6b24f94257ef498c0031016d82f10ed52de64736f6c63430007040033";
+    public static final String BINARY = "608060405234801561001057600080fd5b506104a7806100206000396000f3fe608060405234801561001057600080fd5b50600436106100415760003560e01c80631f92c32c1461004657806329c5334f1461005b578063dfc503741461006e575b600080fd5b6100596100543660046102b8565b610081565b005b610059610069366004610249565b61012a565b61005961007c3660046102f7565b6101c6565b600080516020610452833981519152813561009f6020840184610403565b6040516100b3939250600090600290610344565b60405180910390a160005b6100cb6020830183610403565b905081101561012657600080516020610452833981519152816100f16020850185610403565b848181106100fb57fe5b90506020020135600060036040516101169493929190610344565b60405180910390a16001016100be565b5050565b604051600080516020610452833981519152906101509083906000908190600190610344565b60405180910390a160005b818110801561016a5750600581105b156101c1576000805160206104528339815191528184848481811061018b57fe5b905060200281019061019d9190610403565b6040516101b1939250600090600290610344565b60405180910390a160010161015b565b505050565b600080516020610452833981519152600160008060006040516101ec9493929190610344565b60405180910390a160408051602081018252600080825291517f30f1763492c53379c96b984afe887914a7047a205c9ade5abd51ad9634e7733d9261023e92853592829190829081908190819061035f565b60405180910390a150565b6000806020838503121561025b578182fd5b823567ffffffffffffffff80821115610272578384fd5b818501915085601f830112610285578384fd5b813581811115610293578485fd5b86602080830285010111156102a6578485fd5b60209290920196919550909350505050565b6000602082840312156102c9578081fd5b813567ffffffffffffffff8111156102df578182fd5b8201604081850312156102f0578182fd5b9392505050565b600060208284031215610308578081fd5b813567ffffffffffffffff81111561031e578182fd5b820161010081850312156102f0578182fd5b6001600160a01b03169052565b60ff169052565b93845260208401929092526040830152606082015260800190565b60006101008a8352602060018060a01b038b1681850152896040850152816060850152885180838601528392505b808310156103ac5789830182015185840161012001529181019161038d565b808311156103be578361012082870101525b601f01601f191684016101200192506103dd9150506080830187610330565b8460a08301528360c08301526103f660e083018461033d565b9998505050505050505050565b6000808335601e19843603018112610419578283fd5b83018035915067ffffffffffffffff821115610433578283fd5b602090810192508102360382131561044a57600080fd5b925092905056fee5b286ee80c4f7811cec734b866242d61e30147d0b204f87684a2418d138d78fa26469706673582212204642d595a0e6d9f18901bdbabe416b6d8efc64f7a0a6f9e104fdb708f8154b5f64736f6c63430007040033";
 
     public static final String FUNC_ARRAYARRAY = "arrayArray";
+
+    public static final String FUNC_PROCESSSIGNEDEVENT = "processSignedEvent";
 
     public static final String FUNC_STRUCTWITHARRAY = "structWithArray";
 
@@ -53,6 +56,10 @@ public class Abi2Check extends Contract {
 
     public static final Event DUMP_EVENT = new Event("Dump", 
             Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}, new TypeReference<Bytes32>() {}, new TypeReference<Address>() {}, new TypeReference<DynamicBytes>() {}));
+    ;
+
+    public static final Event PROCESSSIGNEDEVENT_EVENT = new Event("ProcessSignedEvent", 
+            Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}, new TypeReference<Address>() {}, new TypeReference<Bytes32>() {}, new TypeReference<DynamicBytes>() {}, new TypeReference<Address>() {}, new TypeReference<Bytes32>() {}, new TypeReference<Bytes32>() {}, new TypeReference<Uint8>() {}));
     ;
 
     @Deprecated
@@ -147,6 +154,51 @@ public class Abi2Check extends Contract {
         return dumpEventFlowable(filter);
     }
 
+    public List<ProcessSignedEventEventResponse> getProcessSignedEventEvents(TransactionReceipt transactionReceipt) {
+        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(PROCESSSIGNEDEVENT_EVENT, transactionReceipt);
+        ArrayList<ProcessSignedEventEventResponse> responses = new ArrayList<ProcessSignedEventEventResponse>(valueList.size());
+        for (Contract.EventValuesWithLog eventValues : valueList) {
+            ProcessSignedEventEventResponse typedResponse = new ProcessSignedEventEventResponse();
+            typedResponse.log = eventValues.getLog();
+            typedResponse.blockchainId = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
+            typedResponse.cbcContract = (String) eventValues.getNonIndexedValues().get(1).getValue();
+            typedResponse.eventSignature = (byte[]) eventValues.getNonIndexedValues().get(2).getValue();
+            typedResponse.eventParameters = (byte[]) eventValues.getNonIndexedValues().get(3).getValue();
+            typedResponse.signers = (String) eventValues.getNonIndexedValues().get(4).getValue();
+            typedResponse.sigR = (byte[]) eventValues.getNonIndexedValues().get(5).getValue();
+            typedResponse.sigS = (byte[]) eventValues.getNonIndexedValues().get(6).getValue();
+            typedResponse.sigV = (BigInteger) eventValues.getNonIndexedValues().get(7).getValue();
+            responses.add(typedResponse);
+        }
+        return responses;
+    }
+
+    public Flowable<ProcessSignedEventEventResponse> processSignedEventEventFlowable(EthFilter filter) {
+        return web3j.ethLogFlowable(filter).map(new Function<Log, ProcessSignedEventEventResponse>() {
+            @Override
+            public ProcessSignedEventEventResponse apply(Log log) {
+                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(PROCESSSIGNEDEVENT_EVENT, log);
+                ProcessSignedEventEventResponse typedResponse = new ProcessSignedEventEventResponse();
+                typedResponse.log = log;
+                typedResponse.blockchainId = (BigInteger) eventValues.getNonIndexedValues().get(0).getValue();
+                typedResponse.cbcContract = (String) eventValues.getNonIndexedValues().get(1).getValue();
+                typedResponse.eventSignature = (byte[]) eventValues.getNonIndexedValues().get(2).getValue();
+                typedResponse.eventParameters = (byte[]) eventValues.getNonIndexedValues().get(3).getValue();
+                typedResponse.signers = (String) eventValues.getNonIndexedValues().get(4).getValue();
+                typedResponse.sigR = (byte[]) eventValues.getNonIndexedValues().get(5).getValue();
+                typedResponse.sigS = (byte[]) eventValues.getNonIndexedValues().get(6).getValue();
+                typedResponse.sigV = (BigInteger) eventValues.getNonIndexedValues().get(7).getValue();
+                return typedResponse;
+            }
+        });
+    }
+
+    public Flowable<ProcessSignedEventEventResponse> processSignedEventEventFlowable(DefaultBlockParameter startBlock, DefaultBlockParameter endBlock) {
+        EthFilter filter = new EthFilter(startBlock, endBlock, getContractAddress());
+        filter.addSingleTopic(EventEncoder.encode(PROCESSSIGNEDEVENT_EVENT));
+        return processSignedEventEventFlowable(filter);
+    }
+
     public RemoteFunctionCall<TransactionReceipt> arrayArray(List<List<BigInteger>> _param) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ARRAYARRAY, 
@@ -165,6 +217,22 @@ public class Abi2Check extends Contract {
                         org.web3j.abi.datatypes.DynamicArray.class,
                         org.web3j.abi.Utils.typeMap(_param, org.web3j.abi.datatypes.DynamicArray.class,
                 org.web3j.abi.datatypes.generated.Uint256.class))), 
+                Collections.<TypeReference<?>>emptyList());
+        return org.web3j.abi.FunctionEncoder.encode(function);
+    }
+
+    public RemoteFunctionCall<TransactionReceipt> processSignedEvent(SignedEvent _e1) {
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
+                FUNC_PROCESSSIGNEDEVENT, 
+                Arrays.<Type>asList(_e1), 
+                Collections.<TypeReference<?>>emptyList());
+        return executeRemoteCallTransaction(function);
+    }
+
+    public String getRLP_processSignedEvent(SignedEvent _e1) {
+        final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
+                FUNC_PROCESSSIGNEDEVENT, 
+                Arrays.<Type>asList(_e1), 
                 Collections.<TypeReference<?>>emptyList());
         return org.web3j.abi.FunctionEncoder.encode(function);
     }
@@ -221,6 +289,60 @@ public class Abi2Check extends Contract {
         return deployRemoteCall(Abi2Check.class, web3j, transactionManager, gasPrice, gasLimit, BINARY, "");
     }
 
+    public static class SignedEvent extends DynamicStruct {
+        public BigInteger blockchainId;
+
+        public String cbcContract;
+
+        public byte[] eventSignature;
+
+        public byte[] eventParameters;
+
+        public List<String> signers;
+
+        public List<byte[]> sigR;
+
+        public List<byte[]> sigS;
+
+        public List<BigInteger> sigV;
+
+        public SignedEvent(BigInteger blockchainId, String cbcContract, byte[] eventSignature, byte[] eventParameters, List<String> signers, List<byte[]> sigR, List<byte[]> sigS, List<BigInteger> sigV) {
+            super(new org.web3j.abi.datatypes.generated.Uint256(blockchainId),new org.web3j.abi.datatypes.Address(cbcContract),new org.web3j.abi.datatypes.generated.Bytes32(eventSignature),new org.web3j.abi.datatypes.DynamicBytes(eventParameters),new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(org.web3j.abi.datatypes.Address.class, org.web3j.abi.Utils.convertTo_address(signers)),new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.generated.Bytes32>(org.web3j.abi.datatypes.generated.Bytes32.class, org.web3j.abi.Utils.convertTo_bytes32(sigR)),new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.generated.Bytes32>(org.web3j.abi.datatypes.generated.Bytes32.class, org.web3j.abi.Utils.convertTo_bytes32(sigS)),new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.generated.Uint8>(org.web3j.abi.datatypes.generated.Uint8.class, org.web3j.abi.Utils.convertTo_uint8(sigV)));
+            this.blockchainId = blockchainId;
+            this.cbcContract = cbcContract;
+            this.eventSignature = eventSignature;
+            this.eventParameters = eventParameters;
+            this.signers = signers;
+            this.sigR = sigR;
+            this.sigS = sigS;
+            this.sigV = sigV;
+        }
+
+        public SignedEvent(Uint256 blockchainId, Address cbcContract, Bytes32 eventSignature, DynamicBytes eventParameters, DynamicArray<Address> signers, DynamicArray<Bytes32> sigR, DynamicArray<Bytes32> sigS, DynamicArray<Uint8> sigV) {
+            super(blockchainId,cbcContract,eventSignature,eventParameters,signers,sigR,sigS,sigV);
+            this.blockchainId = blockchainId.getValue();
+            this.cbcContract = cbcContract.getValue();
+            this.eventSignature = eventSignature.getValue();
+            this.eventParameters = eventParameters.getValue();
+            this.signers = new java.util.ArrayList<>();;
+            for (org.web3j.abi.datatypes.Address z: signers.getValue()) {;
+            this.signers.add(z.getValue());;
+            };
+            this.sigR = new java.util.ArrayList<>();;
+            for (org.web3j.abi.datatypes.generated.Bytes32 z: sigR.getValue()) {;
+            this.sigR.add(z.getValue());;
+            };
+            this.sigS = new java.util.ArrayList<>();;
+            for (org.web3j.abi.datatypes.generated.Bytes32 z: sigS.getValue()) {;
+            this.sigS.add(z.getValue());;
+            };
+            this.sigV = new java.util.ArrayList<>();;
+            for (org.web3j.abi.datatypes.generated.Uint8 z: sigV.getValue()) {;
+            this.sigV.add(z.getValue());;
+            };
+        }
+    }
+
     public static class Astro extends DynamicStruct {
         public BigInteger val1;
 
@@ -260,5 +382,23 @@ public class Abi2Check extends Contract {
         public String _val3;
 
         public byte[] _val4;
+    }
+
+    public static class ProcessSignedEventEventResponse extends BaseEventResponse {
+        public BigInteger blockchainId;
+
+        public String cbcContract;
+
+        public byte[] eventSignature;
+
+        public byte[] eventParameters;
+
+        public String signers;
+
+        public byte[] sigR;
+
+        public byte[] sigS;
+
+        public BigInteger sigV;
     }
 }

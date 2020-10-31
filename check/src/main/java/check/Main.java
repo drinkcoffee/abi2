@@ -51,7 +51,12 @@ public class Main {
     // TODO fails because web3j isn't encoding the correct function signature.
     // rootBlockchain.checkArrayArray();
 
-    rootBlockchain.checkStructWithArray();
+    // This works
+    //rootBlockchain.checkStructWithArray();
+
+    // This does not work. Problems either with the encoding by Web3J or the decode EVM byte code generated
+    // by the Solidity compiler.
+    rootBlockchain.checkProcessSignedEvent();
 
     rootBlockchain.shutdown();
   }

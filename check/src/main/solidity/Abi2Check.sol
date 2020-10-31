@@ -47,4 +47,34 @@ contract Abi2Check  {
     }
 
 
+    struct SignedEvent {
+        uint256 blockchainId;
+        address cbcContract;
+        bytes32 eventSignature;
+        bytes eventParameters;
+        address[] signers;
+        bytes32[] sigR;
+        bytes32[] sigS;
+        uint8[] sigV;
+    }
+
+    event ProcessSignedEvent(uint256 blockchainId, address cbcContract, bytes32 eventSignature, bytes eventParameters,
+        address signers, bytes32 sigR, bytes32 sigS, uint8 sigV);
+
+//    function processSignedEvent(SignedEvent calldata _e1, SignedEvent calldata _e2) external {
+    function processSignedEvent(SignedEvent calldata _e1) external {
+        emit AstroDump(1, 0, 0, 0);
+        emit ProcessSignedEvent(_e1.blockchainId, address(0), bytes32(0), bytes(""),
+            address(0), bytes32(0), bytes32(0), uint8(0));
+//        emit AstroDump(2, _e1.signers.length, _e1.sigR.length, _e1.sigS.length);
+//        emit AstroDump(2, 0, 0, _e1.sigV.length);
+//        emit ProcessSignedEvent(_e1.blockchainId, _e1.cbcContract, _e1.eventSignature, _e1.eventParameters,
+//            address(0), bytes32(0), bytes32(0), uint8(0));
+//        for (uint256 i = 0; i < _e1.signers.length; i++) {
+//            emit ProcessSignedEvent(3, address(0), bytes32(0), bytes(""),
+//                _e1.signers[i], _e1.sigR[i], _e1.sigS[i], _e1.sigV[i]);
+//        }
+    }
+
+
 }
